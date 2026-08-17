@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#08090b">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <title>Administrador | Corporación La Sureña</title>
+    <meta name="theme-color" content="#08090b">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>Panel del Administrador | Corporación La Sureña</title>
+
+    <link rel="icon" type="image/png" href="imagenes/logo1.png">
 
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIINfQ3cR2H4Qn5p5jvR5q4L5x5p5x5p5x5="
+        crossorigin=""
     >
 
     <link rel="stylesheet" href="admin.css">
@@ -22,24 +27,19 @@
     <div id="loadingScreen" class="loading-screen">
 
         <div class="loading-logo">
-            <img
-                src="imagenes/logo1.png"
-                alt="Corporación La Sureña"
-            >
+            <img src="imagenes/logo1.png" alt="Corporación La Sureña">
         </div>
 
         <div class="loading-spinner"></div>
 
         <p>
-            Verificando sesión...
+            Cargando panel...
         </p>
 
     </div>
 
-    <div
-        id="app"
-        class="app hidden"
-    >
+
+    <div id="app" class="app hidden">
 
         <header class="top-header">
 
@@ -64,17 +64,23 @@
 
             </div>
 
+
             <button
                 id="logoutButton"
                 class="logout-button"
                 type="button"
+                title="Cerrar sesión"
+                aria-label="Cerrar sesión"
             >
-                <span>↪</span>
+                ↪
             </button>
 
         </header>
 
+
         <main class="main-content">
+
+            <!-- INICIO -->
 
             <section
                 id="sectionInicio"
@@ -83,9 +89,9 @@
 
                 <div class="welcome-section">
 
-                    <p class="welcome-label">
+                    <div class="welcome-label">
                         Bienvenido
-                    </p>
+                    </div>
 
                     <h2 id="adminName">
                         Administrador
@@ -96,6 +102,7 @@
                     </p>
 
                 </div>
+
 
                 <div class="stats-grid">
 
@@ -119,6 +126,7 @@
 
                     </article>
 
+
                     <article class="stat-card branches-card">
 
                         <div class="stat-icon">
@@ -139,6 +147,7 @@
 
                     </article>
 
+
                     <article class="stat-card attendance-card">
 
                         <div class="stat-icon">
@@ -158,6 +167,7 @@
                         </div>
 
                     </article>
+
 
                     <article class="stat-card records-card">
 
@@ -181,111 +191,115 @@
 
                 </div>
 
-                <section class="quick-section">
 
-                    <div class="section-heading">
+                <div class="section-heading">
 
-                        <div>
+                    <div>
 
-                            <span class="section-eyebrow">
-                                Acceso rápido
-                            </span>
+                        <span class="section-eyebrow">
+                            Acceso rápido
+                        </span>
 
-                            <h3>
-                                Administración
-                            </h3>
+                        <h3>
+                            Administración
+                        </h3>
 
+                    </div>
+
+                </div>
+
+
+                <div class="quick-grid">
+
+                    <button
+                        type="button"
+                        class="quick-card"
+                        data-section="trabajadores"
+                    >
+
+                        <div class="quick-icon">
+                            👷
                         </div>
 
-                    </div>
+                        <div class="quick-title">
+                            Trabajadores
+                        </div>
 
-                    <div class="quick-grid">
+                        <div class="quick-description">
+                            Consultar usuarios
+                        </div>
 
-                        <button
-                            class="quick-card"
-                            data-section="trabajadores"
-                            type="button"
-                        >
+                    </button>
 
-                            <span class="quick-icon">
-                                👷
-                            </span>
 
-                            <span class="quick-title">
-                                Trabajadores
-                            </span>
+                    <button
+                        type="button"
+                        class="quick-card"
+                        data-section="asistencias"
+                    >
 
-                            <span class="quick-description">
-                                Consultar usuarios
-                            </span>
+                        <div class="quick-icon">
+                            📋
+                        </div>
 
-                        </button>
+                        <div class="quick-title">
+                            Asistencias
+                        </div>
 
-                        <button
-                            class="quick-card"
-                            data-section="asistencias"
-                            type="button"
-                        >
+                        <div class="quick-description">
+                            Ver registros
+                        </div>
 
-                            <span class="quick-icon">
-                                📋
-                            </span>
+                    </button>
 
-                            <span class="quick-title">
-                                Asistencias
-                            </span>
 
-                            <span class="quick-description">
-                                Ver registros
-                            </span>
+                    <button
+                        type="button"
+                        class="quick-card"
+                        data-section="sucursales"
+                    >
 
-                        </button>
+                        <div class="quick-icon">
+                            📍
+                        </div>
 
-                        <button
-                            class="quick-card"
-                            data-section="sucursales"
-                            type="button"
-                        >
+                        <div class="quick-title">
+                            Sucursales
+                        </div>
 
-                            <span class="quick-icon">
-                                📍
-                            </span>
+                        <div class="quick-description">
+                            Administrar ubicaciones
+                        </div>
 
-                            <span class="quick-title">
-                                Sucursales
-                            </span>
+                    </button>
 
-                            <span class="quick-description">
-                                Administrar ubicaciones
-                            </span>
 
-                        </button>
+                    <button
+                        type="button"
+                        class="quick-card"
+                        data-section="reportes"
+                    >
 
-                        <button
-                            class="quick-card"
-                            data-section="reportes"
-                            type="button"
-                        >
+                        <div class="quick-icon">
+                            📊
+                        </div>
 
-                            <span class="quick-icon">
-                                📊
-                            </span>
+                        <div class="quick-title">
+                            Reportes
+                        </div>
 
-                            <span class="quick-title">
-                                Reportes
-                            </span>
+                        <div class="quick-description">
+                            Exportar información
+                        </div>
 
-                            <span class="quick-description">
-                                Exportar información
-                            </span>
+                    </button>
 
-                        </button>
-
-                    </div>
-
-                </section>
+                </div>
 
             </section>
+
+
+            <!-- TRABAJADORES -->
 
             <section
                 id="sectionTrabajadores"
@@ -294,9 +308,9 @@
 
                 <div class="page-title">
 
-                    <span class="page-icon">
+                    <div class="page-icon">
                         👷
-                    </span>
+                    </div>
 
                     <div>
 
@@ -312,43 +326,34 @@
 
                 </div>
 
-                <div class="info-card">
 
-                    <div class="info-card-icon">
-                        🔐
-                    </div>
+                <div
+                    id="workersModule"
+                    class="module-container"
+                >
 
-                    <div>
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            👷
+                        </div>
 
                         <h3>
-                            Usuarios administrados desde Firebase
+                            Cargando trabajadores...
                         </h3>
 
                         <p>
-                            Las cuentas de los trabajadores se crean directamente desde Firebase Authentication. Desde aquí posteriormente podremos consultar y suspender sus cuentas.
+                            Estamos preparando la información de los trabajadores.
                         </p>
 
                     </div>
 
                 </div>
 
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        👷
-                    </div>
-
-                    <h3>
-                        Gestión de trabajadores
-                    </h3>
-
-                    <p>
-                        El siguiente módulo permitirá consultar, buscar y suspender trabajadores registrados.
-                    </p>
-
-                </div>
-
             </section>
+
+
+            <!-- ASISTENCIAS -->
 
             <section
                 id="sectionAsistencias"
@@ -357,14 +362,14 @@
 
                 <div class="page-title">
 
-                    <span class="page-icon">
+                    <div class="page-icon">
                         📋
-                    </span>
+                    </div>
 
                     <div>
 
                         <span class="section-eyebrow">
-                            Registros
+                            Control
                         </span>
 
                         <h2>
@@ -375,55 +380,34 @@
 
                 </div>
 
-                <div class="search-box">
 
-                    <span>
-                        ⌕
-                    </span>
+                <div
+                    id="attendanceModule"
+                    class="module-container"
+                >
 
-                    <input
-                        type="search"
-                        id="attendanceSearch"
-                        placeholder="Buscar trabajador..."
-                    >
+                    <div class="empty-state">
 
-                </div>
+                        <div class="empty-icon">
+                            📋
+                        </div>
 
-                <div class="filter-row">
+                        <h3>
+                            Cargando asistencias...
+                        </h3>
 
-                    <button
-                        class="filter-button"
-                        type="button"
-                    >
-                        📅 Fecha
-                    </button>
+                        <p>
+                            Estamos preparando los registros de asistencia.
+                        </p>
 
-                    <button
-                        class="filter-button"
-                        type="button"
-                    >
-                        📍 Sucursal
-                    </button>
-
-                </div>
-
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        📋
                     </div>
-
-                    <h3>
-                        Registros de asistencia
-                    </h3>
-
-                    <p>
-                        Aquí aparecerán las asistencias registradas por los trabajadores.
-                    </p>
 
                 </div>
 
             </section>
+
+
+            <!-- SUCURSALES -->
 
             <section
                 id="sectionSucursales"
@@ -432,9 +416,9 @@
 
                 <div class="page-title">
 
-                    <span class="page-icon">
+                    <div class="page-icon">
                         📍
-                    </span>
+                    </div>
 
                     <div>
 
@@ -450,6 +434,7 @@
 
                 </div>
 
+
                 <button
                     id="addBranchButton"
                     class="primary-action"
@@ -457,12 +442,13 @@
                 >
 
                     <span>
-                        ＋
+                        +
                     </span>
 
                     Nueva sucursal
 
                 </button>
+
 
                 <div
                     id="branchFormContainer"
@@ -493,6 +479,7 @@
 
                     </div>
 
+
                     <form id="branchForm">
 
                         <input
@@ -500,62 +487,78 @@
                             id="branchId"
                         >
 
-                        <label class="form-label">
+
+                        <label
+                            class="form-label"
+                            for="branchName"
+                        >
                             Nombre de la sucursal
                         </label>
 
                         <input
+                            class="form-input"
                             type="text"
                             id="branchName"
-                            class="form-input"
                             placeholder="Ej. Sucursal Centro"
-                            maxlength="80"
+                            autocomplete="off"
                             required
                         >
 
-                        <label class="form-label">
+
+                        <label
+                            class="form-label"
+                            for="branchAddress"
+                        >
                             Dirección
                         </label>
 
                         <input
+                            class="form-input"
                             type="text"
                             id="branchAddress"
-                            class="form-input"
-                            placeholder="Ej. Av. Principal #123"
-                            maxlength="180"
+                            placeholder="Ej. Calle principal #123"
+                            autocomplete="off"
                         >
+
 
                         <div class="coordinates-heading">
 
                             <div>
 
-                                <label class="form-label">
+                                <label
+                                    class="form-label"
+                                    for="branchLatitude"
+                                >
                                     Latitud
                                 </label>
 
                                 <input
+                                    class="form-input"
                                     type="number"
                                     id="branchLatitude"
-                                    class="form-input"
-                                    placeholder="19.432600"
                                     step="any"
+                                    placeholder="19.432600"
                                     required
                                 >
 
                             </div>
 
+
                             <div>
 
-                                <label class="form-label">
+                                <label
+                                    class="form-label"
+                                    for="branchLongitude"
+                                >
                                     Longitud
                                 </label>
 
                                 <input
+                                    class="form-input"
                                     type="number"
                                     id="branchLongitude"
-                                    class="form-input"
-                                    placeholder="-99.133200"
                                     step="any"
+                                    placeholder="-99.133200"
                                     required
                                 >
 
@@ -563,21 +566,31 @@
 
                         </div>
 
+
                         <div class="map-instruction">
-                            📍 Toca el mapa o mueve el marcador para seleccionar la ubicación de la sucursal.
+
+                            📍 También puedes seleccionar directamente
+                            la ubicación de la sucursal haciendo clic en el mapa.
+                            El marcador se puede arrastrar.
+
                         </div>
+
 
                         <div
                             id="branchMap"
                             class="branch-map"
                         ></div>
 
+
                         <div class="radius-header">
 
                             <div>
 
-                                <label class="form-label">
-                                    Radio de aceptación
+                                <label
+                                    class="form-label"
+                                    for="branchRadius"
+                                >
+                                    Radio permitido
                                 </label>
 
                                 <p>
@@ -595,15 +608,17 @@
 
                         </div>
 
+
                         <input
-                            type="range"
                             id="branchRadius"
                             class="radius-range"
+                            type="range"
                             min="10"
                             max="500"
                             step="5"
                             value="50"
                         >
+
 
                         <div class="radius-presets">
 
@@ -641,20 +656,21 @@
 
                         </div>
 
+
                         <div class="branch-form-actions">
 
                             <button
-                                type="button"
                                 id="cancelBranchButton"
                                 class="secondary-action"
+                                type="button"
                             >
                                 Cancelar
                             </button>
 
                             <button
-                                type="submit"
                                 id="saveBranchButton"
                                 class="primary-action form-submit"
+                                type="submit"
                             >
                                 Guardar sucursal
                             </button>
@@ -665,6 +681,7 @@
 
                 </div>
 
+
                 <div class="branches-heading">
 
                     <div>
@@ -674,7 +691,7 @@
                         </span>
 
                         <h3>
-                            Todas las sucursales
+                            Mis sucursales
                         </h3>
 
                     </div>
@@ -688,12 +705,16 @@
 
                 </div>
 
+
                 <div
                     id="branchesList"
                     class="branches-list"
                 ></div>
 
             </section>
+
+
+            <!-- REPORTES -->
 
             <section
                 id="sectionReportes"
@@ -702,9 +723,9 @@
 
                 <div class="page-title">
 
-                    <span class="page-icon">
+                    <div class="page-icon">
                         📊
-                    </span>
+                    </div>
 
                     <div>
 
@@ -720,99 +741,27 @@
 
                 </div>
 
-                <div class="report-card">
 
-                    <div class="report-icon">
-                        📄
-                    </div>
+                <div
+                    id="reportsModule"
+                    class="module-container"
+                >
 
-                    <div>
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            📊
+                        </div>
 
                         <h3>
-                            Exportar registros
+                            Reportes
                         </h3>
 
                         <p>
-                            Genera archivos con la información de asistencia.
+                            Aquí podrás exportar la información de asistencias en diferentes formatos.
                         </p>
 
                     </div>
-
-                </div>
-
-                <div class="export-options">
-
-                    <button
-                        class="export-button"
-                        type="button"
-                        data-export="image"
-                    >
-
-                        <span>
-                            🖼️
-                        </span>
-
-                        <div>
-
-                            <strong>
-                                Imagen
-                            </strong>
-
-                            <small>
-                                Compartir registro
-                            </small>
-
-                        </div>
-
-                    </button>
-
-                    <button
-                        class="export-button"
-                        type="button"
-                        data-export="pdf"
-                    >
-
-                        <span>
-                            📄
-                        </span>
-
-                        <div>
-
-                            <strong>
-                                PDF
-                            </strong>
-
-                            <small>
-                                Generar documento
-                            </small>
-
-                        </div>
-
-                    </button>
-
-                    <button
-                        class="export-button"
-                        type="button"
-                        data-export="excel"
-                    >
-
-                        <span>
-                            📊
-                        </span>
-
-                        <div>
-
-                            <strong>
-                                Excel
-                            </strong>
-
-                            <small>
-                                Exportar datos
-                            </small>
-
-                        </div>
-
-                    </button>
 
                 </div>
 
@@ -820,12 +769,15 @@
 
         </main>
 
+
+        <!-- NAVEGACIÓN -->
+
         <nav class="bottom-navigation">
 
             <button
+                type="button"
                 class="nav-item active"
                 data-section="inicio"
-                type="button"
             >
 
                 <span class="nav-icon">
@@ -838,10 +790,11 @@
 
             </button>
 
+
             <button
+                type="button"
                 class="nav-item"
                 data-section="trabajadores"
-                type="button"
             >
 
                 <span class="nav-icon">
@@ -854,10 +807,11 @@
 
             </button>
 
+
             <button
+                type="button"
                 class="nav-item"
                 data-section="asistencias"
-                type="button"
             >
 
                 <span class="nav-icon">
@@ -870,10 +824,11 @@
 
             </button>
 
+
             <button
+                type="button"
                 class="nav-item"
                 data-section="sucursales"
-                type="button"
             >
 
                 <span class="nav-icon">
@@ -886,10 +841,11 @@
 
             </button>
 
+
             <button
+                type="button"
                 class="nav-item"
                 data-section="reportes"
-                type="button"
             >
 
                 <span class="nav-icon">
@@ -906,13 +862,17 @@
 
     </div>
 
+
     <div
         id="notification"
         class="notification"
     ></div>
 
+
     <script
         src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
     ></script>
 
     <script

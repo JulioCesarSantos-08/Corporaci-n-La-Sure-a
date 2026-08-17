@@ -371,6 +371,7 @@
         }
 
         @media (max-height: 680px) {
+
             .page {
                 padding-top: 18px;
                 padding-bottom: 20px;
@@ -409,6 +410,7 @@
         }
 
         @media (min-width: 700px) {
+
             .page {
                 padding: 35px;
             }
@@ -459,10 +461,15 @@
 
                 <div class="welcome">
                     <h1>Iniciar sesión</h1>
-                    <p>Ingresa con la cuenta proporcionada por la administración.</p>
+                    <p>
+                        Ingresa con la cuenta proporcionada por la administración.
+                    </p>
                 </div>
 
-                <div id="statusMessage" class="status-message"></div>
+                <div
+                    id="statusMessage"
+                    class="status-message"
+                ></div>
 
                 <form id="loginForm">
 
@@ -576,47 +583,69 @@
             getDoc
         } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAA668dcBZXPdrx8MGujZCCP6EM2WNlprw",
-    authDomain: "refrigeracionessantos.firebaseapp.com",
-    databaseURL: "https://refrigeracionessantos-default-rtdb.firebaseio.com",
-    projectId: "refrigeracionessantos",
-    storageBucket: "refrigeracionessantos.firebasestorage.app",
-    messagingSenderId: "456489319194",
-    appId: "1:456489319194:web:5929a5f7eb50ccbde58aa3"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyAA668dcBZXPdrx8MGujZCCP6EM2WNlprw",
+            authDomain: "refrigeracionessantos.firebaseapp.com",
+            databaseURL: "https://refrigeracionessantos-default-rtdb.firebaseio.com",
+            projectId: "refrigeracionessantos",
+            storageBucket: "refrigeracionessantos.firebasestorage.app",
+            messagingSenderId: "456489319194",
+            appId: "1:456489319194:web:5929a5f7eb50ccbde58aa3"
+        };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const loginForm = document.getElementById("loginForm");
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("password");
-        const loginButton = document.getElementById("loginButton");
-        const forgotPassword = document.getElementById("forgotPassword");
-        const togglePassword = document.getElementById("togglePassword");
-        const statusMessage = document.getElementById("statusMessage");
+        const loginForm =
+            document.getElementById("loginForm");
 
-        function showMessage(message, type = "error") {
-            statusMessage.textContent = message;
-            statusMessage.className = `status-message ${type}`;
+        const emailInput =
+            document.getElementById("email");
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const forgotPassword =
+            document.getElementById("forgotPassword");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const statusMessage =
+            document.getElementById("statusMessage");
+
+        function showMessage(
+            message,
+            type = "error"
+        ) {
+            statusMessage.textContent =
+                message;
+
+            statusMessage.className =
+                `status-message ${type}`;
         }
 
         function clearMessage() {
             statusMessage.textContent = "";
-            statusMessage.className = "status-message";
+            statusMessage.className =
+                "status-message";
         }
 
         async function redirectByUser(user) {
 
-            const userRef = doc(
-                db,
-                "users",
-                user.uid
-            );
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                );
 
-            const userSnapshot = await getDoc(userRef);
+            const userSnapshot =
+                await getDoc(userRef);
 
             if (!userSnapshot.exists()) {
 
@@ -626,9 +655,14 @@ const firebaseConfig = {
                 return;
             }
 
-            const userData = userSnapshot.data();
+            const userData =
+                userSnapshot.data();
 
-            if (userData.estado === "suspendido") {
+            const estado =
+                userData.estado ||
+                "activo";
+
+            if (estado === "suspendido") {
 
                 await auth.signOut();
 
@@ -637,7 +671,10 @@ const firebaseConfig = {
                 );
             }
 
-            if (userData.rol === "administrador") {
+            const rol =
+                userData.rol;
+
+            if (rol === "administrador") {
 
                 window.location.href =
                     "admin.html";
@@ -645,7 +682,7 @@ const firebaseConfig = {
                 return;
             }
 
-            if (userData.rol === "gerente") {
+            if (rol === "gerente") {
 
                 window.location.href =
                     "gerente.html";
@@ -653,7 +690,7 @@ const firebaseConfig = {
                 return;
             }
 
-            if (userData.rol === "trabajador") {
+            if (rol === "trabajador") {
 
                 window.location.href =
                     "trabajador.html";
@@ -664,13 +701,13 @@ const firebaseConfig = {
             await auth.signOut();
 
             throw new Error(
-                "Tu cuenta no tiene un rol válido."
+                "Tu cuenta no tiene un rol válido. Comunícate con la administración."
             );
         }
 
         loginForm.addEventListener(
             "submit",
-            async (event) => {
+            async event => {
 
                 event.preventDefault();
 
@@ -691,7 +728,9 @@ const firebaseConfig = {
                     return;
                 }
 
-                loginButton.disabled = true;
+                loginButton.disabled =
+                    true;
+
                 loginButton.textContent =
                     "Verificando...";
 
@@ -722,6 +761,7 @@ const firebaseConfig = {
                         error.code ===
                         "auth/invalid-credential"
                     ) {
+
                         message =
                             "El correo o la contraseña son incorrectos.";
                     }
@@ -730,6 +770,7 @@ const firebaseConfig = {
                         error.code ===
                         "auth/user-disabled"
                     ) {
+
                         message =
                             "Esta cuenta se encuentra suspendida.";
                     }
@@ -738,6 +779,7 @@ const firebaseConfig = {
                         error.code ===
                         "auth/too-many-requests"
                     ) {
+
                         message =
                             "Demasiados intentos. Intenta nuevamente más tarde.";
                     }
@@ -746,13 +788,18 @@ const firebaseConfig = {
                         error.message &&
                         !error.code
                     ) {
+
                         message =
                             error.message;
                     }
 
-                    showMessage(message);
+                    showMessage(
+                        message
+                    );
 
-                    loginButton.disabled = false;
+                    loginButton.disabled =
+                        false;
+
                     loginButton.textContent =
                         "Iniciar sesión";
                 }
@@ -793,10 +840,16 @@ const firebaseConfig = {
 
                 } catch (error) {
 
+                    console.error(
+                        "Error enviando recuperación:",
+                        error
+                    );
+
                     if (
                         error.code ===
                         "auth/user-not-found"
                     ) {
+
                         showMessage(
                             "No encontramos una cuenta con ese correo."
                         );
@@ -816,7 +869,8 @@ const firebaseConfig = {
             () => {
 
                 const isPassword =
-                    passwordInput.type === "password";
+                    passwordInput.type ===
+                    "password";
 
                 passwordInput.type =
                     isPassword
