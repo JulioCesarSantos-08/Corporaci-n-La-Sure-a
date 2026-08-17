@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#08090b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Corporación La Sureña | Control de Asistencia</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --orange: #ff9d00;
+            --orange-dark: #d97800;
+            --black: #08090b;
+            --black-soft: #111318;
+            --white: #ffffff;
+            --gray: #bfc1c5;
+            --gray-dark: #777a80;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--black);
+        }
+
+        body {
+            min-height: 100dvh;
+            overflow: hidden;
+        }
+
+        .splash {
+            position: relative;
+            width: 100%;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 22px;
+            background:
+                radial-gradient(
+                    circle at 50% 38%,
+                    rgba(255, 157, 0, 0.09) 0%,
+                    rgba(255, 157, 0, 0.03) 28%,
+                    transparent 55%
+                ),
+                linear-gradient(
+                    180deg,
+                    #08090b 0%,
+                    #0d0f12 55%,
+                    #08090b 100%
+                );
+        }
+
+        .splash::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--orange);
+        }
+
+        .splash::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--orange);
+        }
+
+        .splash-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 390px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .logo-container {
+            width: 235px;
+            height: 235px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            animation: aparecerLogo 0.9s ease;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .company-name {
+            color: var(--white);
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            line-height: 1.15;
+            margin-bottom: 7px;
+            animation: aparecerTexto 0.8s ease 0.15s both;
+        }
+
+        .company-line {
+            width: 85px;
+            height: 2px;
+            background: var(--orange);
+            margin: 4px auto 13px;
+            animation: aparecerLinea 0.8s ease 0.25s both;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.7px;
+            margin-bottom: 32px;
+            animation: aparecerTexto 0.8s ease 0.3s both;
+        }
+
+        .loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            animation: aparecerTexto 0.8s ease 0.4s both;
+        }
+
+        .loader {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(255, 255, 255, 0.14);
+            border-top-color: var(--orange);
+            border-right-color: var(--orange);
+            border-radius: 50%;
+            animation: girar 0.8s linear infinite;
+        }
+
+        .loading-text {
+            color: var(--gray-dark);
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        .bottom-label {
+            position: absolute;
+            bottom: 19px;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            text-align: center;
+            color: #666970;
+            font-size: 9px;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+
+        @keyframes girar {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes aparecerLogo {
+            from {
+                opacity: 0;
+                transform: scale(0.86);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes aparecerTexto {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes aparecerLinea {
+            from {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+
+            to {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+
+        @media (max-height: 650px) {
+            .logo-container {
+                width: 180px;
+                height: 180px;
+                margin-bottom: 16px;
+            }
+
+            .company-name {
+                font-size: 23px;
+            }
+
+            .subtitle {
+                margin-bottom: 22px;
+            }
+        }
+
+        @media (min-width: 700px) {
+            .splash-content {
+                max-width: 430px;
+            }
+
+            .logo-container {
+                width: 260px;
+                height: 260px;
+            }
+
+            .company-name {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="splash">
+
+        <div class="splash-content">
+
+            <div class="logo-container">
+                <img
+                    src="imagenes/logo1.png"
+                    alt="Corporación La Sureña"
+                >
+            </div>
+
+            <h1 class="company-name">
+                CORPORACIÓN LA SUREÑA
+            </h1>
+
+            <div class="company-line"></div>
+
+            <p class="subtitle">
+                Control de Asistencia
+            </p>
+
+            <div class="loader-container">
+                <div class="loader"></div>
+
+                <span class="loading-text">
+                    Cargando sistema...
+                </span>
+            </div>
+
+        </div>
+
+        <div class="bottom-label">
+            Sistema empresarial
+        </div>
+
+    </main>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1800);
+    </script>
+
+</body>
+</html>

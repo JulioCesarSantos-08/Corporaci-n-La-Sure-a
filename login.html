@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#08090b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Iniciar sesión | Corporación La Sureña</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --orange: #ff9d00;
+            --orange-dark: #d97800;
+            --black: #08090b;
+            --black-soft: #111318;
+            --white: #ffffff;
+            --gray: #bfc1c5;
+            --gray-dark: #777a80;
+            --border: #2b2e33;
+            --green: #20a464;
+            --red: #d64545;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        body {
+            min-height: 100dvh;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .page {
+            position: relative;
+            min-height: 100dvh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px 18px 30px;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 50% 15%,
+                    rgba(255, 157, 0, 0.10) 0%,
+                    rgba(255, 157, 0, 0.03) 25%,
+                    transparent 48%
+                ),
+                linear-gradient(
+                    180deg,
+                    #08090b 0%,
+                    #0d0f12 50%,
+                    #08090b 100%
+                );
+        }
+
+        .page::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--orange);
+        }
+
+        .page::after {
+            content: "";
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--orange);
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 21px;
+        }
+
+        .logo {
+            width: 145px;
+            height: 145px;
+            object-fit: contain;
+            margin-bottom: 13px;
+            animation: logoAppear 0.7s ease;
+        }
+
+        .brand-name {
+            font-size: 23px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: 0.7px;
+            line-height: 1.15;
+            animation: textAppear 0.7s ease 0.1s both;
+        }
+
+        .brand-line {
+            width: 72px;
+            height: 2px;
+            background: var(--orange);
+            margin: 9px auto 8px;
+            animation: lineAppear 0.7s ease 0.2s both;
+        }
+
+        .brand-description {
+            color: var(--gray);
+            font-size: 12px;
+            letter-spacing: 0.4px;
+            animation: textAppear 0.7s ease 0.25s both;
+        }
+
+        .login-card {
+            width: 100%;
+            background: rgba(17, 19, 24, 0.98);
+            border-radius: 23px;
+            padding: 25px 19px 21px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.30);
+            border: 1px solid var(--border);
+            animation: cardAppear 0.7s ease 0.15s both;
+        }
+
+        .welcome {
+            margin-bottom: 21px;
+        }
+
+        .welcome h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--white);
+        }
+
+        .welcome p {
+            color: var(--gray);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 7px;
+            color: #e3e4e6;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            height: 54px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #0d0f12;
+            padding: 0 48px 0 15px;
+            font-size: 16px;
+            color: var(--white);
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        .input-wrapper input::placeholder {
+            color: #686b70;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--orange);
+            background: #101216;
+            box-shadow: 0 0 0 3px rgba(255, 157, 0, 0.12);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            width: 46px;
+            height: 46px;
+            border: none;
+            background: transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #aeb0b4;
+        }
+
+        .forgot-password {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -4px;
+            margin-bottom: 18px;
+        }
+
+        .forgot-password button {
+            border: none;
+            background: transparent;
+            color: var(--orange);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+
+        .main-button {
+            width: 100%;
+            height: 55px;
+            border: none;
+            border-radius: 15px;
+            background: var(--orange);
+            color: var(--black);
+            font-size: 16px;
+            font-weight: 850;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(255, 157, 0, 0.20);
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .main-button:active {
+            transform: scale(0.98);
+        }
+
+        .main-button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .security-message {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 19px;
+            padding: 12px 13px;
+            border-radius: 12px;
+            background: rgba(255, 157, 0, 0.07);
+            border: 1px solid rgba(255, 157, 0, 0.16);
+            color: var(--gray);
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .security-icon {
+            width: 29px;
+            height: 29px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: var(--orange);
+            color: var(--black);
+            font-size: 14px;
+        }
+
+        .status-message {
+            display: none;
+            width: 100%;
+            padding: 12px 13px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 12px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .status-message.error {
+            display: block;
+            background: rgba(214, 69, 69, 0.12);
+            color: #ff8585;
+            border: 1px solid rgba(214, 69, 69, 0.35);
+        }
+
+        .status-message.success {
+            display: block;
+            background: rgba(32, 164, 100, 0.12);
+            color: #72dda7;
+            border: 1px solid rgba(32, 164, 100, 0.35);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 17px;
+            color: #606369;
+            font-size: 9px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        @keyframes logoAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.88);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes textAppear {
+            from {
+                opacity: 0;
+                transform: translateY(7px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes lineAppear {
+            from {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+
+            to {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-height: 680px) {
+            .page {
+                padding-top: 18px;
+                padding-bottom: 20px;
+            }
+
+            .logo {
+                width: 105px;
+                height: 105px;
+                margin-bottom: 8px;
+            }
+
+            .logo-section {
+                margin-bottom: 15px;
+            }
+
+            .brand-name {
+                font-size: 20px;
+            }
+
+            .brand-line {
+                margin-top: 6px;
+                margin-bottom: 6px;
+            }
+
+            .login-card {
+                padding: 19px 17px 17px;
+            }
+
+            .welcome {
+                margin-bottom: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+        }
+
+        @media (min-width: 700px) {
+            .page {
+                padding: 35px;
+            }
+
+            .login-container {
+                max-width: 420px;
+            }
+
+            .logo {
+                width: 155px;
+                height: 155px;
+            }
+
+            .login-card {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="page">
+
+        <section class="login-container">
+
+            <div class="logo-section">
+
+                <img
+                    class="logo"
+                    src="imagenes/logo1.png"
+                    alt="Corporación La Sureña"
+                >
+
+                <div class="brand-name">
+                    CORPORACIÓN LA SUREÑA
+                </div>
+
+                <div class="brand-line"></div>
+
+                <div class="brand-description">
+                    Sistema de Control de Asistencia
+                </div>
+
+            </div>
+
+            <div class="login-card">
+
+                <div class="welcome">
+                    <h1>Iniciar sesión</h1>
+                    <p>Ingresa con la cuenta proporcionada por la administración.</p>
+                </div>
+
+                <div id="statusMessage" class="status-message"></div>
+
+                <form id="loginForm">
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Correo electrónico
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="correo@ejemplo.com"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Contraseña
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Ingresa tu contraseña"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                id="togglePassword"
+                                aria-label="Mostrar contraseña"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="forgot-password">
+
+                        <button
+                            type="button"
+                            id="forgotPassword"
+                        >
+                            ¿Olvidaste tu contraseña?
+                        </button>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="main-button"
+                        id="loginButton"
+                    >
+                        Iniciar sesión
+                    </button>
+
+                </form>
+
+                <div class="security-message">
+
+                    <div class="security-icon">
+                        🔐
+                    </div>
+
+                    <span>
+                        El acceso está restringido a usuarios autorizados por la administración.
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="footer">
+                Corporación La Sureña · Sistema empresarial
+            </div>
+
+        </section>
+
+    </main>
+
+    <script type="module">
+
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            sendPasswordResetEmail
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+        import {
+            getFirestore,
+            doc,
+            getDoc
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAA668dcBZXPdrx8MGujZCCP6EM2WNlprw",
+    authDomain: "refrigeracionessantos.firebaseapp.com",
+    databaseURL: "https://refrigeracionessantos-default-rtdb.firebaseio.com",
+    projectId: "refrigeracionessantos",
+    storageBucket: "refrigeracionessantos.firebasestorage.app",
+    messagingSenderId: "456489319194",
+    appId: "1:456489319194:web:5929a5f7eb50ccbde58aa3"
+};
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const loginForm = document.getElementById("loginForm");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const loginButton = document.getElementById("loginButton");
+        const forgotPassword = document.getElementById("forgotPassword");
+        const togglePassword = document.getElementById("togglePassword");
+        const statusMessage = document.getElementById("statusMessage");
+
+        function showMessage(message, type = "error") {
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${type}`;
+        }
+
+        function clearMessage() {
+            statusMessage.textContent = "";
+            statusMessage.className = "status-message";
+        }
+
+        async function redirectByUser(user) {
+
+            const userRef = doc(
+                db,
+                "users",
+                user.uid
+            );
+
+            const userSnapshot = await getDoc(userRef);
+
+            if (!userSnapshot.exists()) {
+
+                window.location.href =
+                    "completarPerfil.html";
+
+                return;
+            }
+
+            const userData = userSnapshot.data();
+
+            if (userData.estado === "suspendido") {
+
+                await auth.signOut();
+
+                throw new Error(
+                    "Tu cuenta se encuentra suspendida. Comunícate con la administración."
+                );
+            }
+
+            if (userData.rol === "administrador") {
+
+                window.location.href =
+                    "admin.html";
+
+                return;
+            }
+
+            if (userData.rol === "gerente") {
+
+                window.location.href =
+                    "gerente.html";
+
+                return;
+            }
+
+            if (userData.rol === "trabajador") {
+
+                window.location.href =
+                    "trabajador.html";
+
+                return;
+            }
+
+            await auth.signOut();
+
+            throw new Error(
+                "Tu cuenta no tiene un rol válido."
+            );
+        }
+
+        loginForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                clearMessage();
+
+                const email =
+                    emailInput.value.trim();
+
+                const password =
+                    passwordInput.value;
+
+                if (!email || !password) {
+
+                    showMessage(
+                        "Ingresa tu correo electrónico y contraseña."
+                    );
+
+                    return;
+                }
+
+                loginButton.disabled = true;
+                loginButton.textContent =
+                    "Verificando...";
+
+                try {
+
+                    const credentials =
+                        await signInWithEmailAndPassword(
+                            auth,
+                            email,
+                            password
+                        );
+
+                    await redirectByUser(
+                        credentials.user
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Error de inicio de sesión:",
+                        error
+                    );
+
+                    let message =
+                        "No fue posible iniciar sesión.";
+
+                    if (
+                        error.code ===
+                        "auth/invalid-credential"
+                    ) {
+                        message =
+                            "El correo o la contraseña son incorrectos.";
+                    }
+
+                    if (
+                        error.code ===
+                        "auth/user-disabled"
+                    ) {
+                        message =
+                            "Esta cuenta se encuentra suspendida.";
+                    }
+
+                    if (
+                        error.code ===
+                        "auth/too-many-requests"
+                    ) {
+                        message =
+                            "Demasiados intentos. Intenta nuevamente más tarde.";
+                    }
+
+                    if (
+                        error.message &&
+                        !error.code
+                    ) {
+                        message =
+                            error.message;
+                    }
+
+                    showMessage(message);
+
+                    loginButton.disabled = false;
+                    loginButton.textContent =
+                        "Iniciar sesión";
+                }
+            }
+        );
+
+        forgotPassword.addEventListener(
+            "click",
+            async () => {
+
+                clearMessage();
+
+                const email =
+                    emailInput.value.trim();
+
+                if (!email) {
+
+                    showMessage(
+                        "Primero escribe tu correo electrónico."
+                    );
+
+                    emailInput.focus();
+
+                    return;
+                }
+
+                try {
+
+                    await sendPasswordResetEmail(
+                        auth,
+                        email
+                    );
+
+                    showMessage(
+                        "Te enviamos un correo para restablecer tu contraseña.",
+                        "success"
+                    );
+
+                } catch (error) {
+
+                    if (
+                        error.code ===
+                        "auth/user-not-found"
+                    ) {
+                        showMessage(
+                            "No encontramos una cuenta con ese correo."
+                        );
+
+                        return;
+                    }
+
+                    showMessage(
+                        "No fue posible enviar el correo de recuperación."
+                    );
+                }
+            }
+        );
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+
+                const isPassword =
+                    passwordInput.type === "password";
+
+                passwordInput.type =
+                    isPassword
+                        ? "text"
+                        : "password";
+
+                togglePassword.textContent =
+                    isPassword
+                        ? "🙈"
+                        : "👁";
+
+                togglePassword.setAttribute(
+                    "aria-label",
+                    isPassword
+                        ? "Ocultar contraseña"
+                        : "Mostrar contraseña"
+                );
+            }
+        );
+
+    </script>
+
+</body>
+</html>

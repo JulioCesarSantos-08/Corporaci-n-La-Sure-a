@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#08090b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Trabajador | Corporación La Sureña</title>
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <link rel="stylesheet" href="trabajador.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <img
+                src="imagenes/logo1.png"
+                alt="Corporación La Sureña"
+                class="brand-logo"
+            >
+
+            <div class="brand-info">
+
+                <div class="brand-small">
+                    Sistema de asistencia
+                </div>
+
+                <div class="brand-title">
+                    Corporación La Sureña
+                </div>
+
+            </div>
+
+        </div>
+
+        <button
+            type="button"
+            id="logoutButton"
+            class="logout-button"
+            aria-label="Cerrar sesión"
+        >
+            ↪
+        </button>
+
+    </header>
+
+    <main class="main">
+
+        <section
+            id="homeSection"
+            class="section-page active"
+        >
+
+            <div class="welcome">
+
+                <div class="welcome-label">
+                    Bienvenido
+                </div>
+
+                <h1
+                    class="welcome-title"
+                    id="workerName"
+                >
+                    Trabajador
+                </h1>
+
+                <p class="welcome-description">
+                    Consulta las sucursales y registra tu asistencia desde tu ubicación.
+                </p>
+
+            </div>
+
+            <section class="location-card">
+
+                <div class="location-header">
+
+                    <div class="location-icon" id="locationIcon">
+                        📍
+                    </div>
+
+                    <div class="location-info">
+
+                        <div
+                            class="location-title"
+                            id="locationTitle"
+                        >
+                            Mi ubicación
+                        </div>
+
+                        <div
+                            class="location-text"
+                            id="locationText"
+                        >
+                            Activa tu ubicación para comenzar.
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="location-dot"
+                        id="locationDot"
+                    ></div>
+
+                </div>
+
+                <div
+                    class="location-details"
+                    id="locationDetails"
+                >
+
+                    <div class="location-detail">
+                        <span>Precisión</span>
+                        <strong id="locationAccuracy">
+                            -- m
+                        </strong>
+                    </div>
+
+                    <div class="location-detail">
+                        <span>Latitud</span>
+                        <strong id="locationLatitude">
+                            --
+                        </strong>
+                    </div>
+
+                    <div class="location-detail">
+                        <span>Longitud</span>
+                        <strong id="locationLongitude">
+                            --
+                        </strong>
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="activateLocationButton"
+                    class="activate-location-button"
+                >
+                    📍 Activar mi ubicación
+                </button>
+
+                <button
+                    type="button"
+                    id="centerLocationButton"
+                    class="center-location-button hidden"
+                >
+                    🎯 Centrar en mi ubicación
+                </button>
+
+            </section>
+
+            <div class="section-title">
+
+                <h2>
+                    Sucursales
+                </h2>
+
+                <span
+                    class="section-count"
+                    id="branchCount"
+                >
+                    0 sucursales
+                </span>
+
+            </div>
+
+            <div class="map-container">
+
+                <div id="map"></div>
+
+                <div
+                    class="map-message"
+                    id="mapMessage"
+                >
+                    Cargando mapa...
+                </div>
+
+            </div>
+
+            <div class="map-help">
+                🔵 Tu ubicación &nbsp; • &nbsp; 🏪 Sucursales
+            </div>
+
+            <div class="section-title">
+
+                <h2>
+                    Ubicaciones disponibles
+                </h2>
+
+            </div>
+
+            <div
+                class="branch-list"
+                id="branchList"
+            ></div>
+
+            <section class="attendance-section">
+
+                <div class="attendance-header">
+
+                    <div>
+                        <div class="attendance-label">
+                            Control de asistencia
+                        </div>
+
+                        <h2>
+                            Registrar asistencia
+                        </h2>
+                    </div>
+
+                    <span
+                        class="attendance-date"
+                        id="todayDate"
+                    ></span>
+
+                </div>
+
+                <div
+                    class="attendance-status"
+                    id="attendanceStatus"
+                >
+                    Activa tu ubicación para comprobar si estás dentro de una sucursal.
+                </div>
+
+                <button
+                    type="button"
+                    id="attendanceButton"
+                    class="attendance-button"
+                    disabled
+                >
+                    📍 Tomar asistencia
+                </button>
+
+            </section>
+
+        </section>
+
+        <section
+            id="historySection"
+            class="section-page"
+        >
+
+            <div class="welcome">
+
+                <div class="welcome-label">
+                    Mis registros
+                </div>
+
+                <h1 class="welcome-title">
+                    Historial
+                </h1>
+
+                <p class="welcome-description">
+                    Consulta todas tus asistencias registradas.
+                </p>
+
+            </div>
+
+            <div
+                class="history-summary"
+                id="historySummary"
+            >
+
+                <div class="summary-item">
+
+                    <span>
+                        Total de asistencias
+                    </span>
+
+                    <strong id="historyTotal">
+                        0
+                    </strong>
+
+                </div>
+
+                <div class="summary-item">
+
+                    <span>
+                        Última asistencia
+                    </span>
+
+                    <strong id="historyLast">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div
+                class="history-list"
+                id="historyList"
+            ></div>
+
+        </section>
+
+    </main>
+
+    <nav class="bottom-nav">
+
+        <button
+            type="button"
+            class="nav-button active"
+            data-section="homeSection"
+        >
+            <span>🏠</span>
+            <span>Inicio</span>
+        </button>
+
+        <button
+            type="button"
+            class="nav-button"
+            data-section="historySection"
+        >
+            <span>📋</span>
+            <span>Historial</span>
+        </button>
+
+        <button
+            type="button"
+            class="nav-button"
+            id="navLocation"
+        >
+            <span>📍</span>
+            <span>Mi ubicación</span>
+        </button>
+
+    </nav>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+    <script
+        type="module"
+        src="trabajador.js"
+    ></script>
+
+</body>
+</html>

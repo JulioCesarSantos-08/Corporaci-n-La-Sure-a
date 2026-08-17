@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#08090b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>Administrador | Corporación La Sureña</title>
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <div id="loadingScreen" class="loading-screen">
+
+        <div class="loading-logo">
+            <img
+                src="imagenes/logo1.png"
+                alt="Corporación La Sureña"
+            >
+        </div>
+
+        <div class="loading-spinner"></div>
+
+        <p>
+            Verificando sesión...
+        </p>
+
+    </div>
+
+    <div
+        id="app"
+        class="app hidden"
+    >
+
+        <header class="top-header">
+
+            <div class="header-brand">
+
+                <img
+                    src="imagenes/logo1.png"
+                    alt="Corporación La Sureña"
+                >
+
+                <div>
+
+                    <span class="header-small">
+                        Panel del
+                    </span>
+
+                    <h1>
+                        Administrador
+                    </h1>
+
+                </div>
+
+            </div>
+
+            <button
+                id="logoutButton"
+                class="logout-button"
+                type="button"
+            >
+                <span>↪</span>
+            </button>
+
+        </header>
+
+        <main class="main-content">
+
+            <section
+                id="sectionInicio"
+                class="app-section active"
+            >
+
+                <div class="welcome-section">
+
+                    <p class="welcome-label">
+                        Bienvenido
+                    </p>
+
+                    <h2 id="adminName">
+                        Administrador
+                    </h2>
+
+                    <p class="welcome-text">
+                        Aquí tienes el control general de Corporación La Sureña.
+                    </p>
+
+                </div>
+
+                <div class="stats-grid">
+
+                    <article class="stat-card workers-card">
+
+                        <div class="stat-icon">
+                            👷
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+                                Trabajadores
+                            </span>
+
+                            <strong id="workersCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                    <article class="stat-card branches-card">
+
+                        <div class="stat-icon">
+                            📍
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+                                Sucursales
+                            </span>
+
+                            <strong id="branchesCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                    <article class="stat-card attendance-card">
+
+                        <div class="stat-icon">
+                            ✓
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+                                Asistencias hoy
+                            </span>
+
+                            <strong id="attendanceCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                    <article class="stat-card records-card">
+
+                        <div class="stat-icon">
+                            📋
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+                                Registros
+                            </span>
+
+                            <strong id="recordsCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <section class="quick-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="section-eyebrow">
+                                Acceso rápido
+                            </span>
+
+                            <h3>
+                                Administración
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="quick-grid">
+
+                        <button
+                            class="quick-card"
+                            data-section="trabajadores"
+                            type="button"
+                        >
+
+                            <span class="quick-icon">
+                                👷
+                            </span>
+
+                            <span class="quick-title">
+                                Trabajadores
+                            </span>
+
+                            <span class="quick-description">
+                                Consultar usuarios
+                            </span>
+
+                        </button>
+
+                        <button
+                            class="quick-card"
+                            data-section="asistencias"
+                            type="button"
+                        >
+
+                            <span class="quick-icon">
+                                📋
+                            </span>
+
+                            <span class="quick-title">
+                                Asistencias
+                            </span>
+
+                            <span class="quick-description">
+                                Ver registros
+                            </span>
+
+                        </button>
+
+                        <button
+                            class="quick-card"
+                            data-section="sucursales"
+                            type="button"
+                        >
+
+                            <span class="quick-icon">
+                                📍
+                            </span>
+
+                            <span class="quick-title">
+                                Sucursales
+                            </span>
+
+                            <span class="quick-description">
+                                Administrar ubicaciones
+                            </span>
+
+                        </button>
+
+                        <button
+                            class="quick-card"
+                            data-section="reportes"
+                            type="button"
+                        >
+
+                            <span class="quick-icon">
+                                📊
+                            </span>
+
+                            <span class="quick-title">
+                                Reportes
+                            </span>
+
+                            <span class="quick-description">
+                                Exportar información
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+            <section
+                id="sectionTrabajadores"
+                class="app-section"
+            >
+
+                <div class="page-title">
+
+                    <span class="page-icon">
+                        👷
+                    </span>
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            Administración
+                        </span>
+
+                        <h2>
+                            Trabajadores
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <div class="info-card">
+
+                    <div class="info-card-icon">
+                        🔐
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Usuarios administrados desde Firebase
+                        </h3>
+
+                        <p>
+                            Las cuentas de los trabajadores se crean directamente desde Firebase Authentication. Desde aquí posteriormente podremos consultar y suspender sus cuentas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        👷
+                    </div>
+
+                    <h3>
+                        Gestión de trabajadores
+                    </h3>
+
+                    <p>
+                        El siguiente módulo permitirá consultar, buscar y suspender trabajadores registrados.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <section
+                id="sectionAsistencias"
+                class="app-section"
+            >
+
+                <div class="page-title">
+
+                    <span class="page-icon">
+                        📋
+                    </span>
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            Registros
+                        </span>
+
+                        <h2>
+                            Asistencias
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <div class="search-box">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="search"
+                        id="attendanceSearch"
+                        placeholder="Buscar trabajador..."
+                    >
+
+                </div>
+
+                <div class="filter-row">
+
+                    <button
+                        class="filter-button"
+                        type="button"
+                    >
+                        📅 Fecha
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        type="button"
+                    >
+                        📍 Sucursal
+                    </button>
+
+                </div>
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        Registros de asistencia
+                    </h3>
+
+                    <p>
+                        Aquí aparecerán las asistencias registradas por los trabajadores.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <section
+                id="sectionSucursales"
+                class="app-section"
+            >
+
+                <div class="page-title">
+
+                    <span class="page-icon">
+                        📍
+                    </span>
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            Ubicaciones
+                        </span>
+
+                        <h2>
+                            Sucursales
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <button
+                    id="addBranchButton"
+                    class="primary-action"
+                    type="button"
+                >
+
+                    <span>
+                        ＋
+                    </span>
+
+                    Nueva sucursal
+
+                </button>
+
+                <div
+                    id="branchFormContainer"
+                    class="branch-form-container hidden"
+                >
+
+                    <div class="form-header">
+
+                        <div>
+
+                            <span class="section-eyebrow">
+                                Configuración
+                            </span>
+
+                            <h3 id="branchFormTitle">
+                                Nueva sucursal
+                            </h3>
+
+                        </div>
+
+                        <button
+                            id="closeBranchFormButton"
+                            class="close-form-button"
+                            type="button"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                    <form id="branchForm">
+
+                        <input
+                            type="hidden"
+                            id="branchId"
+                        >
+
+                        <label class="form-label">
+                            Nombre de la sucursal
+                        </label>
+
+                        <input
+                            type="text"
+                            id="branchName"
+                            class="form-input"
+                            placeholder="Ej. Sucursal Centro"
+                            maxlength="80"
+                            required
+                        >
+
+                        <label class="form-label">
+                            Dirección
+                        </label>
+
+                        <input
+                            type="text"
+                            id="branchAddress"
+                            class="form-input"
+                            placeholder="Ej. Av. Principal #123"
+                            maxlength="180"
+                        >
+
+                        <div class="coordinates-heading">
+
+                            <div>
+
+                                <label class="form-label">
+                                    Latitud
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="branchLatitude"
+                                    class="form-input"
+                                    placeholder="19.432600"
+                                    step="any"
+                                    required
+                                >
+
+                            </div>
+
+                            <div>
+
+                                <label class="form-label">
+                                    Longitud
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="branchLongitude"
+                                    class="form-input"
+                                    placeholder="-99.133200"
+                                    step="any"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                        <div class="map-instruction">
+                            📍 Toca el mapa o mueve el marcador para seleccionar la ubicación de la sucursal.
+                        </div>
+
+                        <div
+                            id="branchMap"
+                            class="branch-map"
+                        ></div>
+
+                        <div class="radius-header">
+
+                            <div>
+
+                                <label class="form-label">
+                                    Radio de aceptación
+                                </label>
+
+                                <p>
+                                    Distancia máxima para registrar asistencia.
+                                </p>
+
+                            </div>
+
+                            <strong>
+                                <span id="radiusValue">
+                                    50
+                                </span>
+                                m
+                            </strong>
+
+                        </div>
+
+                        <input
+                            type="range"
+                            id="branchRadius"
+                            class="radius-range"
+                            min="10"
+                            max="500"
+                            step="5"
+                            value="50"
+                        >
+
+                        <div class="radius-presets">
+
+                            <button
+                                type="button"
+                                class="radius-preset"
+                                data-radius="40"
+                            >
+                                40 m
+                            </button>
+
+                            <button
+                                type="button"
+                                class="radius-preset"
+                                data-radius="50"
+                            >
+                                50 m
+                            </button>
+
+                            <button
+                                type="button"
+                                class="radius-preset"
+                                data-radius="60"
+                            >
+                                60 m
+                            </button>
+
+                            <button
+                                type="button"
+                                class="radius-preset"
+                                data-radius="100"
+                            >
+                                100 m
+                            </button>
+
+                        </div>
+
+                        <div class="branch-form-actions">
+
+                            <button
+                                type="button"
+                                id="cancelBranchButton"
+                                class="secondary-action"
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                type="submit"
+                                id="saveBranchButton"
+                                class="primary-action form-submit"
+                            >
+                                Guardar sucursal
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="branches-heading">
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            Registradas
+                        </span>
+
+                        <h3>
+                            Todas las sucursales
+                        </h3>
+
+                    </div>
+
+                    <span
+                        id="branchListCount"
+                        class="list-count"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+                <div
+                    id="branchesList"
+                    class="branches-list"
+                ></div>
+
+            </section>
+
+            <section
+                id="sectionReportes"
+                class="app-section"
+            >
+
+                <div class="page-title">
+
+                    <span class="page-icon">
+                        📊
+                    </span>
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            Información
+                        </span>
+
+                        <h2>
+                            Reportes
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <div class="report-card">
+
+                    <div class="report-icon">
+                        📄
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Exportar registros
+                        </h3>
+
+                        <p>
+                            Genera archivos con la información de asistencia.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="export-options">
+
+                    <button
+                        class="export-button"
+                        type="button"
+                        data-export="image"
+                    >
+
+                        <span>
+                            🖼️
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Imagen
+                            </strong>
+
+                            <small>
+                                Compartir registro
+                            </small>
+
+                        </div>
+
+                    </button>
+
+                    <button
+                        class="export-button"
+                        type="button"
+                        data-export="pdf"
+                    >
+
+                        <span>
+                            📄
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                PDF
+                            </strong>
+
+                            <small>
+                                Generar documento
+                            </small>
+
+                        </div>
+
+                    </button>
+
+                    <button
+                        class="export-button"
+                        type="button"
+                        data-export="excel"
+                    >
+
+                        <span>
+                            📊
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Excel
+                            </strong>
+
+                            <small>
+                                Exportar datos
+                            </small>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <nav class="bottom-navigation">
+
+            <button
+                class="nav-item active"
+                data-section="inicio"
+                type="button"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="trabajadores"
+                type="button"
+            >
+
+                <span class="nav-icon">
+                    👷
+                </span>
+
+                <span>
+                    Trabajadores
+                </span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="asistencias"
+                type="button"
+            >
+
+                <span class="nav-icon">
+                    ✓
+                </span>
+
+                <span>
+                    Asistencias
+                </span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="sucursales"
+                type="button"
+            >
+
+                <span class="nav-icon">
+                    📍
+                </span>
+
+                <span>
+                    Sucursales
+                </span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="reportes"
+                type="button"
+            >
+
+                <span class="nav-icon">
+                    📊
+                </span>
+
+                <span>
+                    Reportes
+                </span>
+
+            </button>
+
+        </nav>
+
+    </div>
+
+    <div
+        id="notification"
+        class="notification"
+    ></div>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+    <script
+        type="module"
+        src="admin.js"
+    ></script>
+
+</body>
+</html>
